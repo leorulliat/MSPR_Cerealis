@@ -37,7 +37,7 @@ db.data = db.data || { posts: [] }
 var { posts } = db.data
 
 app.get("/",async (req,res) => {
-    res.send("GET/getAll \nPOST/registerUser {email, firstName, lastName}")
+    res.send("GET/getAll \nPOST/registerUser {email, firstName, lastName} \nDELETE/")
 })
 
 //getAll
