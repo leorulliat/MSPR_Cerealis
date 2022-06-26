@@ -74,8 +74,11 @@ app.post('/registerUser',urlencodedParser, async (req,res) => {
 })
 
 app.delete("/",async (req,res) => {
+    console.log("pass in delete")
     db.data = { posts: [] } 
+    console.log({result:db.data})
     await db.write()
+    console.log({posts})
     res.send("OK")
 })
 
