@@ -1,9 +1,10 @@
 import 'dotenv/config'
 import express from 'express'
 import fs from 'fs'
-import { join, dirname } from 'path'
+import { join, dirname, resolve } from 'path'
 import { Low, JSONFile } from 'lowdb'
 import bodyParser from 'body-parser'
+import ejs from 'ejs';
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false })  
 const __dirname = dirname("./");
@@ -36,8 +37,19 @@ await db.read()
 db.data = db.data || { posts: [] } 
 var { posts } = db.data
 
+app.set('view engine', 'ejs');
+app.set('views', resolve( __dirname, 'views') );
+
 app.get("/",async (req,res) => {
-    res.send("GET/getAll \nPOST/registerUser {email, firstName, lastName} \nDELETE/")
+    res.redirect("/home")
+})
+
+app.get("/home",async (req,res) => {
+    res.render("index", {})
+})
+
+app.get("/users",async (req,res) => {
+    res.render("users", {posts})
 })
 
 //getAll
@@ -76,6 +88,7 @@ app.post('/registerUser',urlencodedParser, async (req,res) => {
 
 //clear
 app.delete("/",async (req,res) => {
+    console.log("call delete")
     db.data = { posts: [] } 
     posts = db.data.posts
     await db.write()
