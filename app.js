@@ -35,7 +35,7 @@ const PORT = process.env.PORT
 await db.read()
 
 db.data = db.data || { posts: [] } 
-const { posts } = db.data
+var { posts } = db.data
 
 app.get("/",async (req,res) => {
     res.send("GET/getAll \nPOST/registerUser {email, firstName, lastName}")
@@ -76,7 +76,7 @@ app.post('/registerUser',urlencodedParser, async (req,res) => {
 app.delete("/",async (req,res) => {
     console.log("pass in delete")
     db.data = { posts: [] } 
-    console.log({result:db.data})
+    posts = db.data.posts
     await db.write()
     console.log({posts})
     res.send("OK")
