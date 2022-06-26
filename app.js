@@ -9,12 +9,11 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const __dirname = dirname("./");
 
 const file = join(__dirname, 'db.json')
-const defaultFile = `
-{
+const defaultFile = `{
     "posts": []
-}
-`;
+}`;
 
+// création du fichier DB si manquant
 try {
     if(!fs.existsSync(file)) {
         console.log('The file does not exist.');
@@ -25,11 +24,11 @@ try {
     console.error({err});
 }
 
+//initialisation
 const adapter = new JSONFile(file)
 const db = new Low(adapter)
 
 const app = express();
-
 const PORT = process.env.PORT
 
 await db.read()
@@ -41,11 +40,13 @@ app.get("/",async (req,res) => {
     res.send("GET/getAll \nPOST/registerUser {email, firstName, lastName}")
 })
 
+//getAll
 app.get("/getAll",async (req,res) => {
     console.log("GET/getAll")
     res.send(posts)
 })
 
+//registerUser
 app.post('/registerUser',urlencodedParser, async (req,res) => {
     const {email, firstName, lastName} = req.body;
     console.log("POST/registerUser",{email, firstName, lastName})
@@ -73,13 +74,12 @@ app.post('/registerUser',urlencodedParser, async (req,res) => {
     }
 })
 
+//clear
 app.delete("/",async (req,res) => {
-    console.log("pass in delete")
     db.data = { posts: [] } 
     posts = db.data.posts
     await db.write()
-    console.log({posts})
-    res.send("OK")
+    res.send("DB CLEAR")
 })
 
 app.listen(PORT, () => console.log(`Server started on port : ${PORT}`))
