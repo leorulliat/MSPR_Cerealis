@@ -35,7 +35,6 @@ const PORT = process.env.PORT
 await db.read()
 
 db.data = db.data || { posts: [] } 
-const { posts } = db.data
 
 app.get("/",async (req,res) => {
     res.send("GET/getAll \nPOST/registerUser {email, firstName, lastName}")
@@ -43,7 +42,7 @@ app.get("/",async (req,res) => {
 
 app.get("/getAll",async (req,res) => {
     console.log("GET/getAll")
-    res.send(posts)
+    res.send(db.data)
 })
 
 app.post('/registerUser',urlencodedParser, async (req,res) => {
@@ -57,11 +56,11 @@ app.post('/registerUser',urlencodedParser, async (req,res) => {
         res.status(400).send("Champs manquants")
         return
     }
-    if(posts == undefined){
+    if(db.data == undefined){
         res.status(500).send("erreur database")
     }
-    if(!posts.find(item => item.email == email)){
-        posts.push({
+    if(!db.data.find(item => item.email == email)){
+        db.data.push({
             email,
             firstName,
             lastName
