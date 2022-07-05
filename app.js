@@ -40,22 +40,26 @@ var { posts } = db.data
 app.set('view engine', 'ejs');
 app.set('views', resolve( __dirname, 'views') );
 
-app.get("/",async (req,res) => {
+app.get("/",(req,res) => {
     res.redirect("/home")
 })
 
-app.get("/home",async (req,res) => {
+app.get("/home",(req,res) => {
     res.render("index", {})
 })
 
-app.get("/users",async (req,res) => {
+app.get("/users",(req,res) => {
     res.render("users", {posts})
 })
 
 //getAll
-app.get("/getAll",async (req,res) => {
-    console.log("GET/getAll")
+app.get("/getAll",(req,res) => {
     res.send(posts)
+})
+
+//getCount
+app.get("/getCount",(req,res) => {
+    res.send({count:posts.length})
 })
 
 //registerUser
@@ -63,9 +67,9 @@ app.post('/registerUser',urlencodedParser, async (req,res) => {
     const {email, firstName, lastName} = req.body;
     console.log("POST/registerUser",{email, firstName, lastName})
 
-    if( email == undefined ||
-        firstName == undefined ||
-        lastName == undefined
+    if( email == undefined || email == "" ||
+        firstName == undefined || firstName == "" ||
+        lastName == undefined || lastName == ""
     ){
         res.status(400).send("Champs manquants")
         return
