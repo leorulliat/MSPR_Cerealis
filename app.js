@@ -91,7 +91,7 @@ app.post('/registerUser',urlencodedParser, async (req,res) => {
 })
 
 //clear
-app.delete("/",async (req,res) => {
+app.delete("/all",async (req,res) => {
     console.log("call delete")
     db.data = { posts: [] } 
     posts = db.data.posts
@@ -99,4 +99,4 @@ app.delete("/",async (req,res) => {
     res.send("DB CLEAR")
 })
 
-app.listen(PORT, () => console.log(`Server started on port : ${PORT}`))
+export default app.listen(PORT, () => console.log(`Server started on port : ${PORT}`))

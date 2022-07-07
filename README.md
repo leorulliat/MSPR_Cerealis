@@ -2,7 +2,7 @@
  - **GET/getAll** : afficher tous les utilisateurs enregistrés
  - **GET/getCount** : afficher le nombre d'utilisateurs enregistrés
  - **POST/registerUser** : Enregistrer un nouvel utilisateur
- - **DELETE/** : Supprimer tous les utilisateurs
+ - **DELETE/all** : Supprimer tous les utilisateurs
 
 ````TXT
 GET/getAll
@@ -16,7 +16,7 @@ POST/registerUser
     lastName
 }
 
-DELETE/
+DELETE/all
 ````
 <br>
 

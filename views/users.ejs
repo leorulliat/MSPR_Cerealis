@@ -95,7 +95,7 @@
             var beforeRefresh = frequenceRefresh - 1000;
 
             $('#deleteUsers').click(function(){
-                fetch("/",{
+                fetch("/all",{
                     method:'DELETE'
                 }).then((response)=>{
                     location.reload();
